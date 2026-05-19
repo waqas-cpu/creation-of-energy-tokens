@@ -23,12 +23,16 @@ cd ../../frontend && npm install
 
 ## Branches
 
-| Branch | Purpose |
-|--------|---------|
-| `main` | Stable, release-ready |
-| `develop` | Integration / active development |
-| `feature/*` | Topic branches (merge into `develop`) |
+See [docs/BRANCHING.md](docs/BRANCHING.md). Local branches: `main`, `develop`, `frontend`, `settlement`, `pipeline`.
+
+## Push to GitHub
+
+```powershell
+gh auth login
+.\scripts\push-github-branches.ps1 -RepoName "YOUR_GITHUB_USER/sui-energy-architecture"
+```
 
 ## Security
 
-Do not commit `.env`. If keys were ever shared, rotate QuickNode, signer, and `SETTLEMENT_API_KEY` in your provider dashboards.
+- **Never commit `.env`** — copy from `.env.example` after clone.
+- Repo `.env` was removed; rotate any keys that were ever stored locally (RPC URL token, signer, `SETTLEMENT_API_KEY`).
