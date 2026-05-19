@@ -1,0 +1,23 @@
+# Layer 5 settlement events v1.0.0 (integration gates T4)
+schema_version: "v1.0.0"
+events:
+  BurnPrecommit:
+    required: [batch_id, consumer, kwh, timestamp]
+  RedemptionEvent:
+    required: [redemption_id, batch_id, kwh, consumer, timestamp_ms]
+  BurnEvent:
+    required: [amount, redemption_id, consumer, timestamp_ms]
+  SettlementEventV1:
+    required:
+      - event_type
+      - redemption_id
+      - kwh
+      - consumer_addr
+      - producer_addr
+      - oracle_sig
+      - timestamp_ms
+      - block_height
+  RECBridgeInitiated:
+    required: [producer, kwh, source, meter_id, destination_chain, timestamp]
+  USDCSettled:
+    required: [seller, buyer, energy_kwh, usdc_amount, price, timestamp, origin, platform_fee_bps]

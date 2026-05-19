@@ -1,0 +1,36 @@
+# Layer 3 agent interface registry (horizontal decomp Rule F)
+
+[module.energy_token]
+owner = "AGENT_6"
+dependencies = ["sui::coin", "sui::tx_context", "sui::transfer", "sui::object"]
+provides = ["ENERGY", "EnergyMeter", "EnergyBatch", "AdminCap"]
+
+[module.meter_registry]
+owner = "AGENT_2"
+dependencies = ["energy_token"]
+provides = ["register_device", "certify_device", "update_meter_reading"]
+
+[module.compliance_registry]
+owner = "AGENT_4"
+dependencies = ["sui::table", "sui::tx_context"]
+provides = ["ComplianceRegistry", "assert_cleared"]
+
+[module.treasury_guard]
+owner = "AGENT_5"
+dependencies = ["energy_token", "sui::coin"]
+provides = ["TreasuryGuard", "MintAuth", "borrow_treasury_cap"]
+
+[module.minting_engine]
+owner = "AGENT_1"
+dependencies = ["energy_token", "meter_registry", "compliance_registry", "treasury_guard", "batch_receipt"]
+provides = ["mint_energy", "transfer_energy", "burn_on_redemption", "MintingProof"]
+
+[module.batch_receipt]
+owner = "AGENT_3"
+dependencies = ["energy_token"]
+provides = ["issue_batch", "mark_redeemed", "EnergyBatch"]
+
+[module.settlement]
+owner = "AGENT_SETTLEMENT"
+dependencies = ["sui::event"]
+provides = ["emit_trade"]

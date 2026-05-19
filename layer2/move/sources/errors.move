@@ -1,0 +1,41 @@
+/// Layer 2 abort codes — E2xxxx range (MR-5, G-L2-06 R6.5).
+module energy_oracle::errors {
+    public fun duplicate_attestation(): u64 { 20001 }
+    public fun invalid_attestation(): u64 { 20002 }
+    public fun stale_attestation(): u64 { 20003 }
+    public fun unknown_device(): u64 { 20004 }
+    public fun malformed_attestation(): u64 { 20005 }
+    public fun future_timestamp(): u64 { 20006 }
+    public fun rate_limited(): u64 { 20007 }
+    public fun invalid_signature(): u64 { 20010 }
+    public fun high_s_signature(): u64 { 20011 }
+    public fun quorum_not_reached(): u64 { 20020 }
+    public fun unknown_oracle_node(): u64 { 20021 }
+    public fun duplicate_signature(): u64 { 20022 }
+    public fun signature_payload_mismatch(): u64 { 20023 }
+    public fun physically_implausible(): u64 { 20024 }
+    public fun proof_replay(): u64 { 20025 }
+    public fun window_mismatch(): u64 { 20026 }
+    public fun missing_plausibility(): u64 { 20027 }
+    public fun zk_proof_invalid(): u64 { 20030 }
+    public fun invalid_verification_key(): u64 { 20031 }
+    public fun zk_public_input_mismatch(): u64 { 20032 }
+    public fun expired_zk_proof(): u64 { 20033 }
+    public fun unknown_circuit_version(): u64 { 20034 }
+    public fun pending_kyc(): u64 { 20040 }
+    public fun kyc_expired(): u64 { 20041 }
+    public fun suspended_kyc(): u64 { 20042 }
+    public fun unknown_kyc_status(): u64 { 20043 }
+    public fun jurisdiction_blocked(): u64 { 20044 }
+    public fun stale_kyc_bridge(): u64 { 20045 }
+    public fun invalid_kyc_oracle_sig(): u64 { 20046 }
+    public fun not_kyc_cleared(): u64 { 20047 }
+    public fun revoked_kyc(): u64 { 20048 }
+    public fun gas_budget_exceeded(): u64 { 20050 }
+    public fun unknown_feed_id(): u64 { 20060 }
+    public fun price_confidence_too_wide(): u64 { 20061 }
+    public fun stale_price_feed(): u64 { 20062 }
+    public fun price_unavailable(): u64 { 20063 }
+    public fun circuit_breaker(): u64 { 20064 }
+    public fun economic_plausibility(): u64 { 20065 }
+}

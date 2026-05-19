@@ -1,0 +1,26 @@
+{
+  "network": "testnet",
+  "rpcUrl": "https://fullnode.testnet.sui.io:443",
+  "sui": {
+    "frameworkRev": "testnet-v1.72.1"
+  },
+  "contracts": {
+    "nativeUsdcPackage": "0xa1ec7fc00a6f40db9693ad1415d0c193ad3906494428cf252621037bd7114e71",
+    "nativeUsdcType": "0xa1ec7fc00a6f40db9693ad1415d0c193ad3906494428cf252621037bd7114e71::usdc::USDC",
+    "wormholePackage": "0xf47329f4344f3bf0f8e436e2f7b485466cff300f12a166563995d3888c296a94",
+    "wormholeStateObject": "0x31358d198147da50db32eda2562951d53973a0c0ad5ed738e9b17d88b213d790",
+    "pythPackage": "0xabf837e98c26087cba0883c0a7a28326b1fa3c5e1e2c5abdb486f9e8f594c837",
+    "pythStateObject": "0x243759059f4c3111179da5878c12f68d612c21a8d54d85edc86164bb18be1c7c"
+  },
+  "apis": {
+    "wormholeScan": "https://api.testnet.wormholescan.io",
+    "pythHermes": "https://hermes-beta.pyth.network",
+    "circleApi": "https://api-sandbox.circle.com"
+  },
+  "notes": {
+    "sources": "Pyth Sui contract addresses (beta/testnet) — https://docs.pyth.network/price-feeds/core/contract-addresses/sui",
+    "pythFeedExample": "SUI/USD testnet feed: 0x50c67b3fd225db8912a424dd4baed60ffdde625ed2feaaf283724f9608fea266",
+    "nativeUsdc": "Confirm nativeUsdcPackage against Circle Sui testnet docs; RPC check is advisory only on testnet",
+    "moveTests": "layer5/move unit tests use vendor/wormhole_stub; on-chain PTBs use contracts above"
+  }
+}

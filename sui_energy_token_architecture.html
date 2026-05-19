@@ -1,0 +1,288 @@
+<h2 class="sr-only">Sui Network energy tokenisation — interactive architecture reference across five layers</h2>
+<style>
+.tabs{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:18px}
+.tab{padding:8px 14px;font-size:13px;cursor:pointer;border:none;border-bottom:2px solid transparent;color:var(--color-text-secondary);background:transparent;font-family:var(--font-sans);font-weight:400}
+.tab.on{color:var(--color-text-primary);border-bottom-color:var(--color-text-primary);font-weight:500}
+.panel{display:none}.panel.on{display:block}
+.layer{border:0.5px solid var(--color-border-tertiary);border-left:3px solid var(--la);border-radius:var(--border-radius-lg);padding:13px 14px;margin-bottom:9px}
+.layer-p{--la:#BA7517}.layer-o{--la:#185FA5}.layer-s{--la:#534AB7}.layer-e{--la:#0F6E56}.layer-u{--la:#3B6D11}
+@media(prefers-color-scheme:dark){
+  .layer-p{--la:#EF9F27}.layer-o{--la:#378ADD}.layer-s{--la:#7F77DD}.layer-e{--la:#1D9E75}.layer-u{--la:#97C459}
+}
+.lbl{font-size:10px;font-weight:500;letter-spacing:.07em;color:var(--la);margin-bottom:9px;text-transform:uppercase}
+.nds{display:flex;gap:7px;flex-wrap:wrap}
+.nc{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:9px 11px;flex:1;min-width:105px;cursor:pointer;background:var(--color-background-primary);transition:border-color .12s}
+.nc:hover{border-color:var(--color-border-secondary)}
+.nt{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.ns{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.arr{text-align:center;padding:3px 0;font-size:11px;color:var(--color-text-tertiary)}
+.inf{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:13px 14px;margin-top:12px;font-size:13px;color:var(--color-text-secondary);line-height:1.65;min-height:54px}
+.inf strong{color:var(--color-text-primary);font-weight:500}
+pre.cb{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:14px;font-family:var(--font-mono);font-size:11.5px;line-height:1.8;margin:11px 0;overflow-x:auto;color:var(--color-text-primary);white-space:pre}
+.kw{color:#7F77DD}.fn{color:#378ADD}.ty{color:#1D9E75}.cm{color:var(--color-text-tertiary)}.st{color:#639922}
+@media(prefers-color-scheme:dark){.kw{color:#AFA9EC}.fn{color:#85B7EB}.ty{color:#5DCAA5}.st{color:#97C459}}
+.lcs{display:flex;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:12px}
+.ls{flex:1;padding:11px 8px;cursor:pointer;border-right:0.5px solid var(--color-border-tertiary);text-align:center;transition:background .12s}
+.ls:last-child{border-right:none}
+.ls.on{background:var(--color-background-secondary)}
+.lsn{font-size:10px;color:var(--color-text-tertiary);font-weight:500}
+.lst{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-top:2px}
+.lcd{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:15px;font-size:13px;line-height:1.7;color:var(--color-text-secondary)}
+.lcd strong{color:var(--color-text-primary);font-weight:500}
+.ptbs{display:flex;flex-direction:column;gap:7px;margin:10px 0 18px}
+.ps{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary)}
+.pn{font-size:10px;font-weight:500;color:var(--color-text-tertiary);min-width:16px;margin-top:2px}
+.pc{flex:1}
+.pt{font-size:11.5px;font-weight:500;color:var(--color-text-primary);font-family:var(--font-mono)}
+.pp{font-size:12px;color:var(--color-text-secondary);margin-top:3px}
+.bdg{font-size:10px;padding:2px 7px;border-radius:999px;font-weight:500;white-space:nowrap;border:0.5px solid;display:inline-block}
+.b-pu{border-color:#534AB7;color:#534AB7}.b-bl{border-color:#185FA5;color:#185FA5}
+.b-am{border-color:#BA7517;color:#BA7517}.b-te{border-color:#0F6E56;color:#0F6E56}
+.b-gn{border-color:#3B6D11;color:#3B6D11}
+@media(prefers-color-scheme:dark){
+  .b-pu{border-color:#AFA9EC;color:#AFA9EC}.b-bl{border-color:#85B7EB;color:#85B7EB}
+  .b-am{border-color:#FAC775;color:#FAC775}.b-te{border-color:#5DCAA5;color:#5DCAA5}
+  .b-gn{border-color:#97C459;color:#97C459}
+}
+.sh{font-size:13px;font-weight:500;margin:18px 0 8px;color:var(--color-text-primary)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.ldot{width:8px;height:8px;border-radius:2px}
+</style>
+
+<div class="tabs">
+  <button class="tab on" onclick="sw(this,'t-arch')">Architecture</button>
+  <button class="tab" onclick="sw(this,'t-move')">Move objects</button>
+  <button class="tab" onclick="sw(this,'t-lc')">Token lifecycle</button>
+  <button class="tab" onclick="sw(this,'t-ptb')">PTB flows</button>
+</div>
+
+<div class="panel on" id="t-arch">
+  <div class="layer layer-p">
+    <div class="lbl">① Physical generation layer</div>
+    <div class="nds">
+      <div class="nc" onclick="si('solar')"><div class="nt">Solar array</div><div class="ns">kWh metered real-time</div></div>
+      <div class="nc" onclick="si('wind')"><div class="nt">Wind turbine</div><div class="ns">SCADA / OPC-UA integration</div></div>
+      <div class="nc" onclick="si('grid')"><div class="nt">Grid tie-in meter</div><div class="ns">Bidirectional net export</div></div>
+      <div class="nc" onclick="si('iot')"><div class="nt">IoT gateway</div><div class="ns">ECDSA-signed attestations</div></div>
+    </div>
+  </div>
+  <div class="arr">&#x25BC; Signed energy attestation &nbsp;(device_id · kwh_delta · timestamp · secp256k1_sig)</div>
+  <div class="layer layer-o">
+    <div class="lbl">② Oracle &amp; verification layer</div>
+    <div class="nds">
+      <div class="nc" onclick="si('pyth')"><div class="nt">Pyth Network</div><div class="ns">Price feeds native on Sui</div></div>
+      <div class="nc" onclick="si('agg')"><div class="nt">Oracle aggregator</div><div class="ns">M-of-N sig consensus</div></div>
+      <div class="nc" onclick="si('zk')"><div class="nt">ZK attestation (Noir)</div><div class="ns">Proof of generation</div></div>
+      <div class="nc" onclick="si('kyco')"><div class="nt">KYC oracle</div><div class="ns">Producer compliance check</div></div>
+    </div>
+  </div>
+  <div class="arr">&#x25BC; Verified batch &#x2192; Sui PTB transaction submitted</div>
+  <div class="layer layer-s">
+    <div class="lbl">③ Sui Move smart contract layer</div>
+    <div class="nds">
+      <div class="nc" onclick="si('mint')"><div class="nt">MintingEngine</div><div class="ns">Coin&lt;ENERGY&gt; issuance</div></div>
+      <div class="nc" onclick="si('meter')"><div class="nt">EnergyMeter</div><div class="ns">Shared · device state</div></div>
+      <div class="nc" onclick="si('batch')"><div class="nt">EnergyBatch NFT</div><div class="ns">Audit receipt (key, store)</div></div>
+      <div class="nc" onclick="si('tcap')"><div class="nt">TreasuryCap</div><div class="ns">Controlled mint / burn</div></div>
+      <div class="nc" onclick="si('creg')"><div class="nt">ComplianceRegistry</div><div class="ns">On-chain KYC / AML</div></div>
+    </div>
+  </div>
+  <div class="arr">&#x25BC; Coin&lt;ENERGY&gt; owned objects transferred via PTB (no consensus needed)</div>
+  <div class="layer layer-e">
+    <div class="lbl">④ Exchange &amp; transfer layer</div>
+    <div class="nds">
+      <div class="nc" onclick="si('p2p')"><div class="nt">P2P transfer</div><div class="ns">Owned obj · sub-second</div></div>
+      <div class="nc" onclick="si('dex')"><div class="nt">DEX (Cetus / Turbos)</div><div class="ns">ENERGY &#x2194; SUI / USDC</div></div>
+      <div class="nc" onclick="si('mkt')"><div class="nt">Energy marketplace</div><div class="ns">Shared order book obj</div></div>
+      <div class="nc" onclick="si('esc')"><div class="nt">Escrow module</div><div class="ns">Atomic swap settlement</div></div>
+    </div>
+  </div>
+  <div class="arr">&#x25BC; Settled credits · event emitted for grid operator audit trail</div>
+  <div class="layer layer-u">
+    <div class="lbl">⑤ Settlement &amp; utility layer</div>
+    <div class="nds">
+      <div class="nc" onclick="si('bill')"><div class="nt">Utility billing</div><div class="ns">Grid credit offset + burn</div></div>
+      <div class="nc" onclick="si('carb')"><div class="nt">Carbon credits</div><div class="ns">REC bridge (Wormhole)</div></div>
+      <div class="nc" onclick="si('usdc')"><div class="nt">USDC settlement</div><div class="ns">Stablecoin denominated</div></div>
+    </div>
+  </div>
+  <div class="inf" id="inf">Click any component above to explore its role in the architecture.</div>
+</div>
+
+<div class="panel" id="t-move">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 8px">Sui Move is object-centric. <strong style="font-weight:500;color:var(--color-text-primary)">Coin&lt;ENERGY&gt;</strong> are owned objects — parallel execution, no consensus required. <strong style="font-weight:500;color:var(--color-text-primary)">EnergyMeter</strong> is a shared object — consensus-serialised writes, one per physical device.</p>
+  <div class="legend">
+    <div class="leg"><div class="ldot" style="background:#534AB7"></div>Owned object</div>
+    <div class="leg"><div class="ldot" style="background:#185FA5"></div>Shared object</div>
+    <div class="leg"><div class="ldot" style="background:#BA7517"></div>Capability (cap)</div>
+    <div class="leg"><div class="ldot" style="background:#1D9E75"></div>Fungible coin</div>
+    <div class="leg"><div class="ldot" style="background:#3B6D11"></div>NFT receipt</div>
+  </div>
+<pre class="cb"><span class="cm">// ── Module: energy_grid::energy_token ───────────────────────────</span>
+<span class="kw">module</span> energy_grid::energy_token {
+    <span class="kw">use</span> sui::coin::{<span class="ty">Coin</span>, <span class="ty">TreasuryCap</span>};
+    <span class="kw">use</span> sui::object::<span class="ty">UID</span>;
+
+    <span class="cm">// Fungible token witness — one-time-use, drop-only ────────────</span>
+    <span class="kw">public struct</span> <span class="ty">ENERGY</span> <span class="kw">has drop</span> {}
+
+    <span class="cm">// Non-fungible batch receipt (owned by producer) ─────────────</span>
+    <span class="kw">public struct</span> <span class="ty">EnergyBatch</span> <span class="kw">has key, store</span> {
+        id:         <span class="ty">UID</span>,
+        producer:   <span class="ty">address</span>,
+        kwh:        <span class="ty">u64</span>,          <span class="cm">// micro-units: 1_000_000 = 1 kWh</span>
+        source:     <span class="ty">u8</span>,           <span class="cm">// 0=solar 1=wind 2=hydro 3=grid</span>
+        timestamp:  <span class="ty">u64</span>,          <span class="cm">// epoch_timestamp_ms at mint</span>
+        meter_id:   <span class="ty">ID</span>,           <span class="cm">// links to EnergyMeter shared obj</span>
+        oracle_sig: <span class="ty">vector</span>&lt;<span class="ty">u8</span>&gt;,   <span class="cm">// raw ECDSA sig from IoT device</span>
+        redeemed:   <span class="ty">bool</span>,
+    }
+
+    <span class="cm">// Shared meter state — one per physical device ───────────────</span>
+    <span class="kw">public struct</span> <span class="ty">EnergyMeter</span> <span class="kw">has key</span> {
+        id:              <span class="ty">UID</span>,
+        device_pubkey:   <span class="ty">vector</span>&lt;<span class="ty">u8</span>&gt;, <span class="cm">// secp256k1 device pubkey</span>
+        total_kwh:       <span class="ty">u64</span>,
+        last_reading_ts: <span class="ty">u64</span>,
+        is_certified:    <span class="ty">bool</span>,
+        producer_addr:   <span class="ty">address</span>,
+    }
+
+    <span class="cm">// Module init: create currency, transfer TreasuryCap ─────────</span>
+    <span class="kw">fun</span> <span class="fn">init</span>(witness: <span class="ty">ENERGY</span>, ctx: &amp;<span class="kw">mut</span> <span class="ty">TxContext</span>) {
+        <span class="kw">let</span> (treasury, metadata) = coin::<span class="fn">create_currency</span>(
+            witness,
+            <span class="st">6</span>,               <span class="cm">// decimals: 1 ENERGY = 1 kWh</span>
+            <span class="st">b"ENERGY"</span>,
+            <span class="st">b"Energy Token"</span>,
+            <span class="st">b"Tokenised kWh on Sui"</span>,
+            option::none(), ctx,
+        );
+        transfer::<span class="fn">public_freeze_object</span>(metadata);
+        transfer::<span class="fn">public_transfer</span>(treasury, tx_context::<span class="fn">sender</span>(ctx));
+    }
+}</pre>
+
+<pre class="cb"><span class="cm">// ── Module: minting_engine ───────────────────────────────────────</span>
+<span class="kw">public fun</span> <span class="fn">mint_energy</span>(
+    cap:        &amp;<span class="kw">mut</span> <span class="ty">TreasuryCap</span>&lt;<span class="ty">ENERGY</span>&gt;,
+    meter:      &amp;<span class="kw">mut</span> <span class="ty">EnergyMeter</span>,     <span class="cm">// shared obj — consensus write</span>
+    kwh:        <span class="ty">u64</span>,
+    oracle_sig: <span class="ty">vector</span>&lt;<span class="ty">u8</span>&gt;,
+    ctx:        &amp;<span class="kw">mut</span> <span class="ty">TxContext</span>,
+): <span class="ty">Coin</span>&lt;<span class="ty">ENERGY</span>&gt; {
+    <span class="cm">// 1. On-chain sig verification over (meter_id ‖ kwh ‖ timestamp)</span>
+    assert!(<span class="fn">verify_sig</span>(&amp;oracle_sig, meter, kwh), <span class="ty">EInvalidAttestation</span>);
+    <span class="cm">// 2. Replay-protection: timestamp must advance past last reading</span>
+    assert!(<span class="fn">is_fresh</span>(meter, ctx), <span class="ty">EStaleReading</span>);
+    <span class="cm">// 3. Update shared meter state</span>
+    meter.total_kwh = meter.total_kwh + kwh;
+    meter.last_reading_ts = tx_context::<span class="fn">epoch_timestamp_ms</span>(ctx);
+    <span class="cm">// 4. Mint: 1 kWh = 1_000_000 base units (6 decimals)</span>
+    coin::<span class="fn">mint</span>(cap, kwh * <span class="st">1_000_000</span>, ctx)
+}
+
+<span class="cm">// ── Module: compliance_registry ──────────────────────────────────</span>
+<span class="kw">public struct</span> <span class="ty">KycRecord</span> <span class="kw">has store</span> {
+    status:       <span class="ty">u8</span>,   <span class="cm">// 0=pending 1=cleared 2=suspended</span>
+    jurisdiction: <span class="ty">u8</span>,   <span class="cm">// ISO country code</span>
+    expiry:       <span class="ty">u64</span>,  <span class="cm">// epoch ms</span>
+}
+
+<span class="kw">public fun</span> <span class="fn">assert_cleared</span>(reg: &amp;<span class="ty">ComplianceRegistry</span>, addr: <span class="ty">address</span>) {
+    <span class="kw">let</span> rec = table::<span class="fn">borrow</span>(&amp;reg.records, addr);
+    assert!(rec.status == <span class="st">1</span>, <span class="ty">ENotKYCCleared</span>);
+    assert!(rec.expiry &gt; tx_context::<span class="fn">epoch_timestamp_ms</span>(ctx), <span class="ty">EKYCExpired</span>);
+}</pre>
+</div>
+
+<div class="panel" id="t-lc">
+  <div class="lcs">
+    <div class="ls on" onclick="ss(this,0)"><div class="lsn">01</div><div class="lst">Generate</div></div>
+    <div class="ls" onclick="ss(this,1)"><div class="lsn">02</div><div class="lst">Attest</div></div>
+    <div class="ls" onclick="ss(this,2)"><div class="lsn">03</div><div class="lst">Mint</div></div>
+    <div class="ls" onclick="ss(this,3)"><div class="lsn">04</div><div class="lst">Transfer</div></div>
+    <div class="ls" onclick="ss(this,4)"><div class="lsn">05</div><div class="lst">Settle</div></div>
+    <div class="ls" onclick="ss(this,5)"><div class="lsn">06</div><div class="lst">Burn</div></div>
+  </div>
+  <div class="lcd" id="lcd"></div>
+</div>
+
+<div class="panel" id="t-ptb">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 4px">Sui's <strong style="font-weight:500;color:var(--color-text-primary)">Programmable Transaction Blocks</strong> compose multiple Move calls atomically. All steps succeed or the entire block reverts — no partial state corruption.</p>
+
+  <div class="sh">Minting PTB</div>
+  <div class="ptbs">
+    <div class="ps"><div class="pn">1</div><div class="pc"><div class="pt">oracle::verify_reading(meter_id, kwh, sig)</div><div class="pp">Returns ReadingProof — reverts atomically if ECDSA signature invalid</div></div><span class="bdg b-bl">Oracle</span></div>
+    <div class="ps"><div class="pn">2</div><div class="pc"><div class="pt">compliance::assert_producer(addr)</div><div class="pp">Reads ComplianceRegistry shared obj — reverts if KYC not cleared or expired</div></div><span class="bdg b-am">KYC</span></div>
+    <div class="ps"><div class="pn">3</div><div class="pc"><div class="pt">minting_engine::mint_energy(cap, meter, kwh)</div><div class="pp">Returns Coin&lt;ENERGY&gt; — not yet owned by any address at this step</div></div><span class="bdg b-te">Mint</span></div>
+    <div class="ps"><div class="pn">4</div><div class="pc"><div class="pt">transfer::public_transfer(coin, producer_addr)</div><div class="pp">Coin becomes producer's owned object — all future transfers need no consensus</div></div><span class="bdg b-pu">Transfer</span></div>
+    <div class="ps"><div class="pn">5</div><div class="pc"><div class="pt">batch_receipt::issue(meter, kwh, source)</div><div class="pp">Mints EnergyBatch NFT — immutable audit trail, transferred to producer</div></div><span class="bdg b-gn">Receipt</span></div>
+  </div>
+
+  <div class="sh">P2P energy trade PTB</div>
+  <div class="ptbs">
+    <div class="ps"><div class="pn">1</div><div class="pc"><div class="pt">compliance::assert_consumer(buyer_addr)</div><div class="pp">Buyer must also pass KYC — same shared ComplianceRegistry</div></div><span class="bdg b-am">KYC</span></div>
+    <div class="ps"><div class="pn">2</div><div class="pc"><div class="pt">coin::split(energy_coin, sell_amount)</div><div class="pp">Splits seller's Coin&lt;ENERGY&gt; — remaining balance stays with seller</div></div><span class="bdg b-te">Split</span></div>
+    <div class="ps"><div class="pn">3</div><div class="pc"><div class="pt">marketplace::atomic_swap(energy_split, usdc_coin)</div><div class="pp">Escrow swaps ENERGY ↔ USDC — reverts if price check fails</div></div><span class="bdg b-pu">Swap</span></div>
+    <div class="ps"><div class="pn">4</div><div class="pc"><div class="pt">settlement::emit_trade(buyer, seller, kwh, price_usdc)</div><div class="pp">On-chain event for grid operator and regulator audit trail</div></div><span class="bdg b-bl">Audit</span></div>
+  </div>
+
+  <div class="sh">Redemption PTB (burn)</div>
+  <div class="ptbs">
+    <div class="ps"><div class="pn">1</div><div class="pc"><div class="pt">utility::validate_credit(consumer_addr, kwh)</div><div class="pp">Confirms token balance covers the billing period kWh claim</div></div><span class="bdg b-bl">Validate</span></div>
+    <div class="ps"><div class="pn">2</div><div class="pc"><div class="pt">batch_receipt::mark_redeemed(batch_nft)</div><div class="pp">Flags EnergyBatch NFT as consumed — prevents double redemption</div></div><span class="bdg b-gn">Flag</span></div>
+    <div class="ps"><div class="pn">3</div><div class="pc"><div class="pt">coin::burn(treasury_cap, energy_coin)</div><div class="pp">Destroys Coin&lt;ENERGY&gt; — supply decreases, loop closes</div></div><span class="bdg b-am">Burn</span></div>
+  </div>
+</div>
+
+<script>
+const im={
+  solar:'<strong>Solar array</strong> — PV panels with smart inverters report generation every 15 min. Each reading is signed using the inverter\'s hardware-secured private key (TPM / TEE). Fields: peak wattage, cumulative kWh, irradiance, panel temperature.',
+  wind:'<strong>Wind turbine</strong> — SCADA / OPC-UA telemetry aggregated at the turbine controller. An IoT gateway normalises Modbus readings into signed JSON attestations and submits batches to the oracle aggregator.',
+  grid:'<strong>Grid tie-in meter</strong> — Bidirectional smart meter (DLMS/COSEM standard) records net export to the grid. Only positive net export is eligible for tokenisation — on-site consumption is subtracted before the attestation is generated.',
+  iot:'<strong>IoT gateway</strong> — Edge compute (ESP32-S3 with secure element, or Raspberry Pi + HSM) aggregates readings, signs with secp256k1 ECDSA over the payload hash, then submits to the oracle network. The private key never leaves the secure element.',
+  pyth:'<strong>Pyth Network on Sui</strong> — Provides real-time ENERGY/USDC price feeds used by the marketplace for fair-price enforcement. Confidence intervals are checked on-chain before any trade executes — wide spreads revert the swap.',
+  agg:'<strong>Oracle aggregator</strong> — M-of-N threshold signature scheme across IoT device keys and optionally an independent meter reader. Prevents single-device manipulation. Publishes the verified reading as a Move-callable function with the aggregated proof.',
+  zk:'<strong>ZK attestation (Noir / UltraPlonk)</strong> — Zero-knowledge proof that energy was generated within a certified geographic boundary and valid time window, without revealing raw telemetry on-chain. Directly aligns with your existing Noir + Barretenberg ZK work.',
+  kyco:'<strong>KYC oracle</strong> — Your on-chain compliance registry pattern, applied to energy producers. Every address calling mint_energy() must appear in ComplianceRegistry as cleared. The oracle bridges off-chain KYC provider data to the on-chain table.',
+  mint:'<strong>MintingEngine</strong> — Core Move module. Verifies oracle sig with secp256k1_verify(), enforces timestamp freshness on the EnergyMeter shared object (replay protection), updates cumulative kWh, then calls coin::mint(). Returns Coin&lt;ENERGY&gt; within the PTB.',
+  meter:'<strong>EnergyMeter (shared object)</strong> — Persistent on-chain state per physical device. Shared = writes go through Mysticeti consensus. Stores: device_pubkey, cumulative kWh, last reading timestamp, certification status. Read-access is lock-free.',
+  batch:'<strong>EnergyBatch NFT (key, store)</strong> — Non-fungible receipt per minting event. Stores kWh, energy source type (solar/wind/hydro), oracle signature, and producer address. Serves as a Renewable Energy Certificate and carbon credit proof.',
+  tcap:'<strong>TreasuryCap&lt;ENERGY&gt;</strong> — Sui\'s capability-based mint/burn gating. Only the holder can call coin::mint() or coin::burn(). In production this should be held by a multisig DAO governance contract, not a single EOA — parallels your ERC-1400 controller pattern.',
+  creg:'<strong>ComplianceRegistry (shared)</strong> — Maps address &#x2192; KycRecord { status, jurisdiction, expiry }. Both mint_energy() and marketplace::swap() assert!() against it. Mirrors your ERC-3643 identity registry architecture, now expressed in Move with Sui\'s object model.',
+  p2p:'<strong>P2P transfer</strong> — Coin&lt;ENERGY&gt; is an owned object. Transfers require only the sender\'s signature — no consensus, sub-second finality. Ideal for bilateral bilateral trades between prosumers and known consumers (e.g. a factory buying directly from a rooftop solar farm).',
+  dex:'<strong>DEX integration (Cetus / Turbos)</strong> — Both are concentrated liquidity market makers (CLMM) live on Sui mainnet. ENERGY/USDC and ENERGY/SUI pools provide continuous price discovery and allow producers to liquidate positions without a counterparty.',
+  mkt:'<strong>Energy marketplace (shared object)</strong> — Limit order book as a shared object. Producers post sell orders (kWh quantity + USDC ask price). Consumers match against asks. The shared object model means all order state is globally visible and consistently updated.',
+  esc:'<strong>Escrow module</strong> — Holds Coin&lt;ENERGY&gt; during negotiation. The PTB ensures both legs of a trade complete atomically — no partial fills, no front-running via Sui\'s object locking. Critical for grid settlement integrity.',
+  bill:'<strong>Utility billing</strong> — Grid operators accept ENERGY token redemptions against consumer bills. Consumer submits tokens &#x2192; utility contract verifies kWh balance &#x2192; issues credit note &#x2192; burns tokens. Burn prevents double redemption.',
+  carb:'<strong>Carbon credit bridge</strong> — EnergyBatch NFTs are submitted to a Wormhole-bridged REC registry to claim EU ETS or Verra Gold Standard credits. The oracle_sig field in the NFT provides cryptographic proof of physical generation.',
+  usdc:'<strong>USDC settlement</strong> — Native USDC on Sui via Circle\'s CCTP (Cross-Chain Transfer Protocol) or the Wormhole bridge. All marketplace trades denominated in USDC for stability. Sui gas fees: ~$0.001 per PTB transaction at current network rates.',
+};
+
+function si(k){document.getElementById('inf').innerHTML=im[k]||'Details not found.';}
+
+function sw(btn,id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+
+const steps=[
+  {t:'① Energy generation',c:'<strong>Physical kWh production</strong> is captured by smart IoT meters. Every 15 minutes the device produces a signed attestation: <code style="font-family:var(--font-mono);font-size:11px">{ device_id, kwh_delta, timestamp, secp256k1_sig }</code>. The signing key is secured inside a hardware TPM or secure element — this is the cryptographic root of trust for the entire token supply. No valid sig = no tokens, regardless of what any off-chain system claims.'},
+  {t:'② Oracle attestation',c:'<strong>The oracle network certifies readings</strong> before they reach the chain. An M-of-N aggregator checks: signature is from a registered device key, kWh delta is physically plausible (no impossible spikes), timestamp is fresh. A Noir ZK circuit optionally proves the reading is within a certified geographic boundary without revealing raw telemetry on-chain. The verified reading is submitted as a Sui transaction.'},
+  {t:'③ Token minting on Sui',c:'<strong>mint_energy() executes inside a PTB.</strong> On-chain: secp256k1_verify() confirms the oracle sig, the EnergyMeter shared object is checked for replay protection (timestamp must advance). Then coin::mint() creates <code style="font-family:var(--font-mono);font-size:11px">Coin&lt;ENERGY&gt;</code> — 1 ENERGY = 1 kWh at 6 decimal places for milli-kWh granularity. An EnergyBatch NFT is simultaneously issued as an immutable audit receipt.'},
+  {t:'④ Token transfer',c:'<strong>Coin&lt;ENERGY&gt; lands in the producer\'s wallet</strong> as an owned object. Owned objects on Sui bypass Mysticeti consensus — transfers are sub-second. The producer can: hold as a renewable energy certificate, list on the marketplace for sale, split for partial transfer, or provide liquidity on a DEX. No approval mechanism needed — it\'s a direct object ownership transfer.'},
+  {t:'⑤ Exchange &amp; settlement',c:'<strong>ENERGY tokens circulate as a medium of exchange.</strong> Consumers purchase via the marketplace (atomic ENERGY &#x2194; USDC swap, KYC-gated on both sides). Corporate ESG buyers acquire tokens for sustainability reporting. DEX liquidity enables continuous price discovery. Every trade emits an on-chain Sui event — an immutable, queryable audit log for regulators and grid operators.'},
+  {t:'⑥ Burn on redemption',c:'<strong>Tokens are burned to close the loop</strong> and prevent double-spending. When a consumer redeems ENERGY against a utility bill: (1) EnergyBatch NFT is marked redeemed, (2) coin::burn(treasury_cap, coin) destroys the fungible tokens, reducing total supply. The invariant holds: one physical kWh generated &#x2192; one token minted &#x2192; one token burned on actual consumption.'},
+];
+
+function ss(el,i){
+  document.querySelectorAll('.ls').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('lcd').innerHTML=`<div style="font-size:13px;font-weight:500;margin-bottom:8px;color:var(--color-text-primary)">${steps[i].t}</div>${steps[i].c}`;
+}
+ss(document.querySelector('.ls'),0);
+</script>

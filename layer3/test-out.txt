@@ -1,0 +1,257 @@
+﻿sui : [NOTE] Dependencies on Sui, MoveStdlib, Bridge, DeepBook, and SuiSystem are automatically added, but this 
+feature is disabled for your package because you have explicitly included dependencies on Sui. Consider removing these 
+dependencies from `Move.toml`.
+At C:\Users\Administrator\AppData\Local\Temp\ps-script-382642d4-1fee-4f22-a8ba-d0c746f4b13d.ps1:76 char:126
++ ...  "e:\sui energy architecture\layer3\move"; sui move test 2>&1 | Out-F ...
++                                                ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([NOTE] Dependen...om `Move.toml`.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+INCLUDING DEPENDENCY MoveStdlib
+INCLUDING DEPENDENCY Sui
+BUILDING energy_grid
+warning[W09011]: unused constant
+   ΓöîΓöÇ .\sources\minting_engine.move:28:11
+   Γöé
+28 Γöé     const MAX_KWH_PER_READING: u64 = 1_000_000_000;
+   Γöé           ^^^^^^^^^^^^^^^^^^^ The constant 'MAX_KWH_PER_READING' is never used. Consider removing it.
+   Γöé
+   = This warning can be suppressed with '#[allow(unused_const)]' applied to the 'module' or module member ('const', 
+'fun', or 'struct')
+
+warning[W09009]: unused struct field
+   ΓöîΓöÇ .\sources\minting_engine.move:31:9
+   Γöé
+31 Γöé         meter_id: ID,
+   Γöé         ^^^^^^^^ The 'meter_id' field of the 'MintingProof' type is unused
+   Γöé
+   = This warning can be suppressed with '#[allow(unused_field)]' applied to the 'module' or module member ('const', 
+'fun', or 'struct')
+
+warning[W09009]: unused struct field
+   ΓöîΓöÇ .\sources\minting_engine.move:32:9
+   Γöé
+32 Γöé         kwh: u64,
+   Γöé         ^^^ The 'kwh' field of the 'MintingProof' type is unused
+   Γöé
+   = This warning can be suppressed with '#[allow(unused_field)]' applied to the 'module' or module member ('const', 
+'fun', or 'struct')
+
+warning[W09009]: unused struct field
+   ΓöîΓöÇ .\sources\minting_engine.move:33:9
+   Γöé
+33 Γöé         batch_id: ID,
+   Γöé         ^^^^^^^^ The 'batch_id' field of the 'MintingProof' type is unused
+   Γöé
+   = This warning can be suppressed with '#[allow(unused_field)]' applied to the 'module' or module member ('const', 
+'fun', or 'struct')
+
+warning[Lint W99010]: unnecessary `entry` on a `public` function
+   ΓöîΓöÇ .\sources\minting_engine.move:46:12
+   Γöé
+46 Γöé     public entry fun mint_energy(
+   Γöé            ^^^^^ `entry` on `public` is meaningless. In conjunction with `public`, `entry` adds no additional 
+permissions or restrictions.
+   Γöé
+   = `public` functions can be called from PTBs. `entry` can be used to allow non-`public` (private or 
+`public(package)`) functions to be called from PTBs, although there will be additional restrictions on the input 
+arguments to such functions.
+   = This warning can be suppressed with '#[allow(lint(public_entry))]' applied to the 'module' or module member 
+('const', 'fun', or 'struct')
+
+warning[Lint W99001]: non-composable transfer to sender
+    ΓöîΓöÇ .\sources\minting_engine.move:130:9
+    Γöé
+ 79 Γöé     ): Coin<ENERGY> {
+    Γöé        ------------ Returning an object from a function, allows a caller to use the object and enables 
+composability via programmable transactions.
+ 80 Γöé         let producer = tx_context::sender(ctx);
+    Γöé                        ----------------------- Transaction sender address coming from here
+    ┬╖
+130 Γöé         transfer::public_transfer(batch, producer);
+    Γöé         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Transfer of an object to transaction sender address
+    Γöé
+    = This warning can be suppressed with '#[allow(lint(self_transfer))]' applied to the 'module' or module member 
+('const', 'fun', or 'struct')
+
+warning[Lint W99010]: unnecessary `entry` on a `public` function
+    ΓöîΓöÇ .\sources\minting_engine.move:189:12
+    Γöé
+189 Γöé     public entry fun burn_on_redemption(
+    Γöé            ^^^^^ `entry` on `public` is meaningless. In conjunction with `public`, `entry` adds no additional 
+permissions or restrictions.
+    Γöé
+    = `public` functions can be called from PTBs. `entry` can be used to allow non-`public` (private or 
+`public(package)`) functions to be called from PTBs, although there will be additional restrictions on the input 
+arguments to such functions.
+    = This warning can be suppressed with '#[allow(lint(public_entry))]' applied to the 'module' or module member 
+('const', 'fun', or 'struct')
+
+warning[W04037]: deprecated usage
+    ΓöîΓöÇ .\sources\energy_token.move:122:46
+    Γöé
+122 Γöé         let (treasury_cap, metadata) = coin::create_currency(
+    Γöé                                              ^^^^^^^^^^^^^^^ The function 'sui::coin::create_currency' is 
+deprecated: Use `coin_registry::new_currency_with_otw` instead
+    Γöé
+    = This warning can be suppressed with '#[allow(deprecated_usage)]' applied to the 'module' or module member 
+('const', 'fun', or 'struct')
+
+warning[Lint W99002]: potentially unenforceable custom transfer/share/freeze policy
+   ΓöîΓöÇ .\sources\compliance_registry.move:50:16
+   Γöé
+50 Γöé     public fun share_registry(reg: ComplianceRegistry) {
+   Γöé                ^^^^^^^^^^^^^^ --- An instance of a module-private type with a 'store' ability to be shared 
+coming from here
+   Γöé                Γöé               
+   Γöé                Potential unintended implementation of a custom share function.
+51 Γöé         transfer::share_object(reg);
+   Γöé                   ------------ Instances of a type with a 'store' ability can be shared using the 
+'public_share_object' function which often negates the intent of enforcing a custom share policy
+   Γöé
+   = A custom share policy for a given type is implemented through calling the private 'share_object' function variant 
+in the module defining this type
+   = This warning can be suppressed with '#[allow(lint(custom_state_change))]' applied to the 'module' or module 
+member ('const', 'fun', or 'struct')
+
+warning[Lint W99000]: possible owned object share
+   ΓöîΓöÇ .\sources\compliance_registry.move:51:9
+   Γöé
+28 Γöé     public struct ComplianceRegistry has key, store {
+   Γöé                                               ----- Potentially an owned object because 'store' grants access 
+to public transfers
+   ┬╖
+50 Γöé     public fun share_registry(reg: ComplianceRegistry) {
+   Γöé                               --- A potentially owned object coming from here
+51 Γöé         transfer::share_object(reg);
+   Γöé         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   Γöé         Γöé                      Γöé
+   Γöé         Γöé                      Creating a fresh object and sharing it within the same function will ensure 
+this does not abort.
+   Γöé         Potential abort from a (potentially) owned object created by a different transaction.
+   Γöé
+   = This warning can be suppressed with '#[allow(lint(share_owned))]' applied to the 'module' or module member 
+('const', 'fun', or 'struct')
+
+Running Move unit tests
+[ FAIL    ] energy_grid::layer3_tests::test_burn_on_redemption
+[ FAIL    ] energy_grid::layer3_tests::test_double_redemption_reverts
+[ PASS    ] energy_grid::layer3_tests::test_error_codes_documented
+[ FAIL    ] energy_grid::layer3_tests::test_happy_path_mint
+[ FAIL    ] energy_grid::layer3_tests::test_kyc_not_cleared_reverts
+[ FAIL    ] energy_grid::layer3_tests::test_uncertified_meter_reverts
+[ FAIL    ] energy_grid::layer3_tests::test_zero_mint_reverts
+
+Test failures:
+
+Failures in energy_grid::layer3_tests:
+
+ΓöîΓöÇΓöÇ test_burn_on_redemption ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γöé error[E11001]: test failure
+Γöé     ΓöîΓöÇ C:\Users\Administrator\.move\git\https___github_com_MystenLabs_sui_git_94ad8ccd0ed6c089a9fe072ff80c918b5ab44943\crates\sui-framework\packages\sui-framework\sources\test\test_scenario.move:560:5
+Γöé     Γöé
+Γöé 558 Γöé public fun take_shared<T: key>(scenario: &Scenario): T {
+Γöé     Γöé            ----------- In this function in sui::test_scenario
+Γöé 559 Γöé     let id_opt = most_recent_id_shared<T>();
+Γöé 560 Γöé     assert!(id_opt.is_some(), EEmptyInventory);
+Γöé     Γöé     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Test was not expected to error, but it aborted with code 3 originating in the module sui::test_scenario rooted here
+Γöé 
+Γöé 
+Γöé stack trace
+Γöé 	layer3_tests::setup_world(.\tests\layer3_tests.move:37)
+Γöé 	layer3_tests::test_burn_on_redemption(.\tests\layer3_tests.move:194)
+Γöé 
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+ΓöîΓöÇΓöÇ test_double_redemption_reverts ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γöé error[E11001]: test failure
+Γöé     ΓöîΓöÇ C:\Users\Administrator\.move\git\https___github_com_MystenLabs_sui_git_94ad8ccd0ed6c089a9fe072ff80c918b5ab44943\crates\sui-framework\packages\sui-framework\sources\test\test_scenario.move:560:5
+Γöé     Γöé
+Γöé 558 Γöé public fun take_shared<T: key>(scenario: &Scenario): T {
+Γöé     Γöé            ----------- In this function in sui::test_scenario
+Γöé 559 Γöé     let id_opt = most_recent_id_shared<T>();
+Γöé 560 Γöé     assert!(id_opt.is_some(), EEmptyInventory);
+Γöé     Γöé     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Test did not abort with expected code. Expected test to abort with code 6, but instead it aborted with code 3 originating in the module sui::test_scenario rooted here
+Γöé 
+Γöé 
+Γöé stack trace
+Γöé 	layer3_tests::setup_world(.\tests\layer3_tests.move:37)
+Γöé 	layer3_tests::test_double_redemption_reverts(.\tests\layer3_tests.move:235)
+Γöé 
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+ΓöîΓöÇΓöÇ test_happy_path_mint ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γöé error[E11001]: test failure
+Γöé     ΓöîΓöÇ C:\Users\Administrator\.move\git\https___github_com_MystenLabs_sui_git_94ad8ccd0ed6c089a9fe072ff80c918b5ab44943\crates\sui-framework\packages\sui-framework\sources\test\test_scenario.move:560:5
+Γöé     Γöé
+Γöé 558 Γöé public fun take_shared<T: key>(scenario: &Scenario): T {
+Γöé     Γöé            ----------- In this function in sui::test_scenario
+Γöé 559 Γöé     let id_opt = most_recent_id_shared<T>();
+Γöé 560 Γöé     assert!(id_opt.is_some(), EEmptyInventory);
+Γöé     Γöé     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Test was not expected to error, but it aborted with code 3 originating in the module sui::test_scenario rooted here
+Γöé 
+Γöé 
+Γöé stack trace
+Γöé 	layer3_tests::setup_world(.\tests\layer3_tests.move:37)
+Γöé 	layer3_tests::test_happy_path_mint(.\tests\layer3_tests.move:48)
+Γöé 
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+ΓöîΓöÇΓöÇ test_kyc_not_cleared_reverts ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γöé error[E11001]: test failure
+Γöé     ΓöîΓöÇ C:\Users\Administrator\.move\git\https___github_com_MystenLabs_sui_git_94ad8ccd0ed6c089a9fe072ff80c918b5ab44943\crates\sui-framework\packages\sui-framework\sources\test\test_scenario.move:560:5
+Γöé     Γöé
+Γöé 558 Γöé public fun take_shared<T: key>(scenario: &Scenario): T {
+Γöé     Γöé            ----------- In this function in sui::test_scenario
+Γöé 559 Γöé     let id_opt = most_recent_id_shared<T>();
+Γöé 560 Γöé     assert!(id_opt.is_some(), EEmptyInventory);
+Γöé     Γöé     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Test did not abort with expected code. Expected test to abort with code 4, but instead it aborted with code 3 originating in the module sui::test_scenario rooted here
+Γöé 
+Γöé 
+Γöé stack trace
+Γöé 	layer3_tests::setup_world(.\tests\layer3_tests.move:37)
+Γöé 	layer3_tests::test_kyc_not_cleared_reverts(.\tests\layer3_tests.move:152)
+Γöé 
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+ΓöîΓöÇΓöÇ test_uncertified_meter_reverts ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γöé error[E11001]: test failure
+Γöé    ΓöîΓöÇ .\sources\minting_engine.move:86:9
+Γöé    Γöé
+Γöé 69 Γöé     fun mint_energy_impl(
+Γöé    Γöé         ---------------- In this function in energy_grid::minting_engine
+Γöé    ┬╖
+Γöé 86 Γöé         assert!(vector::length(&oracle_sig) == 64, errors::invalid_signature_format());
+Γöé    Γöé         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Test did not abort with expected code. Expected test to abort with code 3, but instead it aborted with code 5 originating in the module energy_grid::minting_engine rooted here
+Γöé 
+Γöé 
+Γöé stack trace
+Γöé 	minting_engine::mint_energy_for_testing(.\sources\minting_engine.move:145-155)
+Γöé 	minting_engine::mint_energy_for_testing_expect_abort(.\sources\minting_engine.move:170-179)
+Γöé 	layer3_tests::test_uncertified_meter_reverts(.\tests\layer3_tests.move:131-140)
+Γöé 
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+
+ΓöîΓöÇΓöÇ test_zero_mint_reverts ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Γöé error[E11001]: test failure
+Γöé     ΓöîΓöÇ C:\Users\Administrator\.move\git\https___github_com_MystenLabs_sui_git_94ad8ccd0ed6c089a9fe072ff80c918b5ab44943\crates\sui-framework\packages\sui-framework\sources\test\test_scenario.move:560:5
+Γöé     Γöé
+Γöé 558 Γöé public fun take_shared<T: key>(scenario: &Scenario): T {
+Γöé     Γöé            ----------- In this function in sui::test_scenario
+Γöé 559 Γöé     let id_opt = most_recent_id_shared<T>();
+Γöé 560 Γöé     assert!(id_opt.is_some(), EEmptyInventory);
+Γöé     Γöé     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Test did not abort with expected code. Expected test to abort with code 0, but instead it aborted with code 3 originating in the module sui::test_scenario rooted here
+Γöé 
+Γöé 
+Γöé stack trace
+Γöé 	layer3_tests::setup_world(.\tests\layer3_tests.move:37)
+Γöé 	layer3_tests::test_zero_mint_reverts(.\tests\layer3_tests.move:79)
+Γöé 
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+Test result: FAILED. Total tests: 7; passed: 1; failed: 6

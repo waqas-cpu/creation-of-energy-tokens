@@ -1,0 +1,20 @@
+{
+  "name": "@sui-energy/full-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "run:sim": "node --experimental-vm-modules dist/runFullPipeline.js"
+  },
+  "dependencies": {
+    "@sui-energy/layer4-engine": "file:../layer4/engine",
+    "@sui-energy/layer5-settlement": "file:../layer5/settlement"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

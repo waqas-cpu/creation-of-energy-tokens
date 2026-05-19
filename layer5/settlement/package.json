@@ -1,0 +1,31 @@
+{
+  "name": "@sui-energy/layer5-settlement",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "start:api": "npm run build && node dist/runSettlementApi.js",
+    "start:indexer": "npm run build && node dist/runEventIndexer.js",
+    "start:bridge-watcher": "npm run build && node dist/runBridgeWatcher.js",
+    "gate:checklist": "npm run build && node dist/runGateChecklist.js",
+    "test": "vitest run",
+    "test:backend": "vitest run tests/backendSmoke.test.ts",
+    "test:move": "sui move test",
+    "production:check": "node ../../scripts/verify-production-readiness.mjs",
+    "production:check:rpc": "node ../../scripts/verify-production-readiness.mjs --rpc"
+  },
+  "dependencies": {
+    "@mysten/sui": "1.21.2",
+    "viem": "^2.21.54"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

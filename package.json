@@ -1,0 +1,29 @@
+{
+  "name": "sui-energy-architecture",
+  "private": true,
+  "scripts": {
+    "test:move:l3": "cd layer3/move && sui move test",
+    "test:move:l5": "cd layer5/move && sui move test",
+    "test:settlement": "cd layer5/settlement && npm test",
+    "test:pipeline": "cd pipeline && npm test",
+    "test:all": "npm run test:move:l3 && npm run test:move:l5 && npm run test:settlement && npm run test:pipeline",
+    "typecheck:ci": "cd layer3/sdk && npm ci && npm run typecheck && cd ../.. && cd layer5/settlement && npm ci && npm run typecheck && cd ../.. && cd pipeline && npm ci && npm run typecheck",
+    "verify:deployment": "node scripts/verify-deployment.mjs",
+    "check:shinami": "node scripts/check-shinami-rpc.mjs",
+    "check:env": "node scripts/check-env-local.mjs",
+    "test:backend": "node scripts/test-backend.mjs",
+    "gate:checklist": "node scripts/gate-checklist.mjs",
+    "gate:checklist:rpc": "node scripts/gate-checklist.mjs --rpc",
+    "backend:up": "docker compose --profile full up --build",
+    "backend:api": "docker compose up --build settlement-api",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:settlement-api": "cd layer5/settlement && npm run start:api",
+    "build:frontend": "cd frontend && npm run build",
+    "dev:stack": "node scripts/dev-stack.mjs",
+    "dev:https:stack": "node scripts/dev-stack-https.mjs",
+    "verify:https": "node scripts/verify-https-stack.mjs",
+    "verify:https:wait": "node scripts/verify-https-stack.mjs --wait",
+    "tunnel:https": "node scripts/tunnel-https.mjs",
+    "validate:manifests": "node scripts/validate-network-manifests.mjs"
+  }
+}

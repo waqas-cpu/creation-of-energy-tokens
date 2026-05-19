@@ -1,0 +1,50 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+*.pem
+**/secrets/
+**/*credentials*
+
+# Runtime / local data
+settlement-data/
+layer5/settlement/settlement-data/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+frontend/dist/
+**/move/build/
+layer4/contracts/cache/
+layer4/contracts/out/
+*.tsbuildinfo
+
+# Vite / Vitest
+.vite/
+coverage/
+**/.vite/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.cursor/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker volumes (local)
+ipfs_data/
+
+# Local Sui toolchain binaries (install via .tools/install-sui-wsl.sh)
+.tools/sui/
+.tools/sui-bin/
+.tools/*.tgz
+
+# Lock files optional — keep package-lock for reproducibility

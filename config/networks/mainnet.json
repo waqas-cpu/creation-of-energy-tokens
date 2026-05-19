@@ -1,0 +1,26 @@
+{
+  "network": "mainnet",
+  "rpcUrl": "https://fullnode.mainnet.sui.io:443",
+  "sui": {
+    "frameworkRev": "mainnet-v1.72.1"
+  },
+  "contracts": {
+    "nativeUsdcPackage": "0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7",
+    "nativeUsdcType": "0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7::usdc::USDC",
+    "wormholePackage": "0x5306f64e312b581766351c07af79c72fcb1cd25147157fdc2f8ad76de9a3fb6a",
+    "wormholeStateObject": "0xaeab97f96cf9877fee2883315d459552b2b921edc16d7ceac6eab944dd88919c",
+    "pythPackage": "0x04e20ddf36af412a4096f9014f4a565af9e812db9a05cc40254846cf6ed0ad91",
+    "pythStateObject": "0x1f9310238ee9298fb703c3419030b35b22bb1cc37113e3bb5007c99aec79e5b8"
+  },
+  "apis": {
+    "wormholeScan": "https://api.wormholescan.io",
+    "pythHermes": "https://hermes.pyth.network",
+    "circleApi": "https://api.circle.com"
+  },
+  "notes": {
+    "sources": "Pyth Sui contract addresses (stable/mainnet) — https://docs.pyth.network/price-feeds/core/contract-addresses/sui",
+    "pythFeedExample": "SUI/USD: 0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d",
+    "moveTests": "layer5/move unit tests use vendor/wormhole_stub; mainnet PTBs use contracts above",
+    "preflight": "SUI_NETWORK=mainnet node scripts/verify-production-readiness.mjs --rpc"
+  }
+}

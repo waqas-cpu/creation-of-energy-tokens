@@ -1,0 +1,77 @@
+name: Sui Energy CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  move-layer3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: MystenLabs/sui-actions/setup-sui@v1
+        with:
+          sui-version: testnet-v1.72.1
+      - name: Layer 3 Move tests
+        working-directory: layer3/move
+        run: sui move test
+
+  move-layer5:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: MystenLabs/sui-actions/setup-sui@v1
+        with:
+          sui-version: testnet-v1.72.1
+      - name: Layer 5 Move tests
+        working-directory: layer5/move
+        run: sui move test
+
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            layer3/sdk/package-lock.json
+            layer5/settlement/package-lock.json
+            pipeline/package-lock.json
+      - name: Install Layer 3 SDK
+        working-directory: layer3/sdk
+        run: npm ci
+      - name: Install Layer 5 settlement
+        working-directory: layer5/settlement
+        run: npm ci
+      - name: Install pipeline
+        working-directory: pipeline
+        run: npm ci
+      - name: Typecheck Layer 3 SDK
+        working-directory: layer3/sdk
+        run: npm run typecheck
+      - name: Typecheck Layer 5 settlement
+        working-directory: layer5/settlement
+        run: npm run typecheck
+      - name: Typecheck pipeline
+        working-directory: pipeline
+        run: npm run typecheck
+      - name: Vitest Layer 5
+        working-directory: layer5/settlement
+        run: npm test
+      - name: Vitest pipeline
+        working-directory: pipeline
+        run: npm test
+
+  verify-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate network manifests
+        run: node scripts/validate-network-manifests.mjs

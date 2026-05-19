@@ -1,0 +1,39 @@
+# Layer 4 agent interface registry (horizontal decomp §4)
+
+[module.Layer4Errors]
+owner = "AGENT_L4_CORE"
+provides = ["Layer4Error", "error codes 1000-1399"]
+
+[module.ExecutionEngine]
+owner = "AGENT_L4_CORE"
+dependencies = ["IZKVerifier", "IIdentityRegistry", "ISanctionsOracle", "Layer4Types"]
+provides = ["executeBatch", "submitExecution", "confirmSettlement", "rollback"]
+
+[module.interfaces]
+owner = "AGENT_L4_CORE"
+provides = ["IZKVerifier", "IIdentityRegistry", "ISanctionsOracle"]
+
+[component.TransactionBuilder]
+owner = "AGENT_TXB"
+lane = "TXB"
+technology = "viem + TypeScript"
+
+[component.ExecutionOrchestrator]
+owner = "AGENT_CTL"
+lane = "CTL"
+technology = "TypeScript"
+
+[component.GasEstimator]
+owner = "AGENT_NET"
+lane = "NET"
+technology = "viem EIP-1559"
+
+[component.ConfirmationTracker]
+owner = "AGENT_FIN"
+lane = "FIN"
+technology = "TypeScript"
+
+[component.IdempotencyGuard]
+owner = "AGENT_SFT"
+lane = "SFT"
+technology = "TypeScript + on-chain mapping"

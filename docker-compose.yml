@@ -1,0 +1,79 @@
+# Testnet product backend — API + IPFS; workers with --profile full
+#   docker compose up --build
+#   docker compose --profile full up --build
+
+services:
+  ipfs:
+    image: ipfs/kubo:v0.32.1
+    ports:
+      - "5001:5001"
+    volumes:
+      - ipfs_data:/data/ipfs
+
+  settlement-api:
+    build:
+      context: ./layer5/settlement
+      dockerfile: Dockerfile
+    ports:
+      - "${SETTLEMENT_API_PORT:-3750}:3750"
+    environment: &settlement_env
+      SUI_NETWORK: ${SUI_NETWORK:-testnet}
+      SUI_RPC_URL: ${SUI_RPC_URL:-}
+      SUI_RPC_API_KEY: ${SUI_RPC_API_KEY:-}
+      SHINAMI_API_KEY: ${SHINAMI_API_KEY:-}
+      BLOCKVISION_RPC_URL: ${BLOCKVISION_RPC_URL:-}
+      BLOCKVISION_RPC_API_KEY: ${BLOCKVISION_RPC_API_KEY:-}
+      L5_PACKAGE_ID: ${L5_PACKAGE_ID:-}
+      L3_GRID_PACKAGE_ID: ${L3_GRID_PACKAGE_ID:-}
+      L5_TREASURY_GUARD_ID: ${L5_TREASURY_GUARD_ID:-}
+      L5_ENERGY_BATCH_ID: ${L5_ENERGY_BATCH_ID:-}
+      L5_ENERGY_COIN_ID: ${L5_ENERGY_COIN_ID:-}
+      L5_ENERGY_METER_ID: ${L5_ENERGY_METER_ID:-}
+      L5_COMPLIANCE_REGISTRY_ID: ${L5_COMPLIANCE_REGISTRY_ID:-}
+      L5_JURISDICTION_POLICY_ID: ${L5_JURISDICTION_POLICY_ID:-}
+      L5_REDEMPTION_REGISTRY_ID: ${L5_REDEMPTION_REGISTRY_ID:-}
+      L5_GRID_OPERATOR_CAP_ID: ${L5_GRID_OPERATOR_CAP_ID:-}
+      L5_BILLING_OPERATOR_CAP_ID: ${L5_BILLING_OPERATOR_CAP_ID:-}
+      L5_GRID_SETTLEMENT_LEDGER_ID: ${L5_GRID_SETTLEMENT_LEDGER_ID:-}
+      SUI_SIGNER_SECRET_KEY: ${SUI_SIGNER_SECRET_KEY:-}
+      SETTLEMENT_DATA_DIR: /data
+      SETTLEMENT_API_PORT: "3750"
+      SETTLEMENT_API_KEY: ${SETTLEMENT_API_KEY:-}
+      SETTLEMENT_API_PUBLIC_READ: ${SETTLEMENT_API_PUBLIC_READ:-false}
+      SETTLEMENT_AUDIT_STREAM_POLL_MS: ${SETTLEMENT_AUDIT_STREAM_POLL_MS:-2000}
+      IPFS_PROVIDER: ${IPFS_PROVIDER:-kubo}
+      IPFS_KUBO_API_URL: ${IPFS_KUBO_API_URL:-http://ipfs:5001}
+      PINATA_JWT: ${PINATA_JWT:-}
+      GATE_CHECK_RPC: "true"
+    volumes:
+      - settlement_data:/data
+    depends_on:
+      - ipfs
+
+  settlement-indexer:
+    build:
+      context: ./layer5/settlement
+      dockerfile: Dockerfile
+    command: ["node", "dist/runEventIndexer.js"]
+    environment: *settlement_env
+    volumes:
+      - settlement_data:/data
+    depends_on:
+      - settlement-api
+    profiles: ["full"]
+
+  settlement-bridge-watcher:
+    build:
+      context: ./layer5/settlement
+      dockerfile: Dockerfile
+    command: ["node", "dist/runBridgeWatcher.js"]
+    environment: *settlement_env
+    volumes:
+      - settlement_data:/data
+    depends_on:
+      - settlement-api
+    profiles: ["full"]
+
+volumes:
+  settlement_data:
+  ipfs_data:

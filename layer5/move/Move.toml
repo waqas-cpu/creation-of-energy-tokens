@@ -1,0 +1,13 @@
+[package]
+name = "energy_settlement"
+edition = "2024.beta"
+version = "0.1.0"
+
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "testnet-v1.72.1" }
+energy_grid = { local = "../../layer3/move" }
+Wormhole = { local = "./vendor/wormhole_stub" }
+usdc = { local = "./vendor/usdc" }
+
+[addresses]
+energy_settlement = "0x0"
