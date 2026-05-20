@@ -1,45 +1,58 @@
+import { motion } from "framer-motion";
+import { CheckCircle, XCircle, AlertTriangle, SkipForward } from "lucide-react";
 import type { GateItem } from "@/api/types";
+
+const statusConfig = {
+  pass: { color: "var(--pass)", bg: "var(--pass-glow)", border: "rgba(52,211,153,0.25)", Icon: CheckCircle, label: "PASS" },
+  fail: { color: "var(--fail)", bg: "var(--fail-glow)", border: "rgba(255,107,122,0.25)", Icon: XCircle, label: "FAIL" },
+  warn: { color: "var(--warn)", bg: "var(--warn-glow)", border: "rgba(245,166,35,0.25)", Icon: AlertTriangle, label: "WARN" },
+  skip: { color: "var(--muted)", bg: "rgba(255,255,255,0.03)", border: "var(--border)", Icon: SkipForward, label: "SKIP" },
+};
 
 export function GatesPanel({ gates }: { gates: GateItem[] }) {
   return (
-    <div className="gates-panel">
-      <table>
-        <thead>
-          <tr>
-            <th>Gate</th>
-            <th>Status</th>
-            <th>Detail</th>
-          </tr>
-        </thead>
-        <tbody>
-          {gates.map((g) => (
-            <tr key={g.id}>
-              <td>
-                <span className="mono">{g.id}</span> {g.name}
-              </td>
-              <td>
-                <span className={`pill pill-${g.status}`}>{g.status}</span>
-              </td>
-              <td className="detail">{g.detail}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <style>{`
-        .gates-panel { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        th, td { text-align: left; padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--border); }
-        th { color: var(--muted); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; }
-        .detail { color: var(--muted); max-width: 320px; }
-        .pill {
-          display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px;
-          font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-        }
-        .pill-pass { background: rgba(82,183,136,0.2); color: var(--pass); }
-        .pill-fail { background: rgba(231,111,111,0.2); color: var(--fail); }
-        .pill-warn { background: rgba(244,162,97,0.2); color: var(--warn); }
-        .pill-skip { background: var(--surface-2); color: var(--muted); }
-      `}</style>
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      {gates.map((g, i) => {
+        const cfg = statusConfig[g.status as keyof typeof statusConfig] ?? statusConfig.skip;
+        const { Icon } = cfg;
+        return (
+          <motion.div
+            key={g.id}
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.05 }}
+            style={{
+              display: "flex", alignItems: "center", gap: 14,
+              padding: "12px 16px", borderRadius: 10,
+              background: cfg.bg,
+              border: `1px solid ${cfg.border}`,
+              backdropFilter: "blur(8px)",
+              transition: "all var(--transition)",
+            }}
+          >
+            <Icon size={16} color={cfg.color} strokeWidth={2} style={{ flexShrink: 0 }} />
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+                <span style={{ fontFamily: "var(--mono)", fontSize: "0.7rem", color: "var(--muted)" }}>{g.id}</span>
+                <span style={{ fontSize: "0.85rem", fontWeight: 500, color: "var(--text)" }}>{g.name}</span>
+              </div>
+              {g.detail && (
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {g.detail}
+                </div>
+              )}
+            </div>
+            <span style={{
+              fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em",
+              color: cfg.color, padding: "3px 8px", borderRadius: 6,
+              background: `${cfg.color}15`, border: `1px solid ${cfg.color}30`,
+              flexShrink: 0,
+            }}>
+              {cfg.label}
+            </span>
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
